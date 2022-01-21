@@ -8,6 +8,7 @@ class Todo extends React.Component{
         this.state = { item : props.item , readOnly:true}
         this.delete = props.delete
     }
+
     deleteEventHadler = ()=>{
         this.delete(this.state.item)
     }
@@ -29,6 +30,7 @@ class Todo extends React.Component{
         thisItem.done = !thisItem.done;
         this.setState({item:thisItem})
     }
+
     render(){
         const item = this.state.item;
         return (

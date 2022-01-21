@@ -32,21 +32,28 @@ public class TodoService {
         return repository.findByUserId(entity.getUserId());
     }
     public List<TodoEntity> retrieve(final String userId){
+        log.info("Entity id : {} is retrieve. ",userId);
         return repository.findByUserId(userId);
     }
+
     public List<TodoEntity> update(final TodoEntity entity){
         validate(entity);
         final Optional<TodoEntity> original = repository.findById(entity.getId());
-        original.ifPresent(todo->{
+
+        original.ifPresent(todo -> {
             todo.setTitle(entity.getTitle());
             todo.setDone(entity.isDone());
+
             repository.save(todo);
         });
+        log.info("Entity id : {} is updated.",entity.getId());
+
         return retrieve(entity.getUserId());
     }
     public List<TodoEntity> delete(final TodoEntity entity){
         validate(entity);
         try{
+            log.info("Entity id : {} is deleted.",entity.getId());
             repository.delete(entity);
         }catch (Exception e){
             log.error("error deleting entity : ",entity.getId(),e);

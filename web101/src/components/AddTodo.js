@@ -28,17 +28,17 @@ class AddTodo extends React.Component{
                 <Grid container>
                     <Grid xs={11} xd={11} item style={{paddingRight:16}}>
                         <TextField placeholder="Add Todo here"
-                                   fullWidth
                                    onChange={this.onInputChange}
                                    value={this.state.item.title}
                                    onKeyPress={this.enterKeyEventHandler}
+                                   fullWidth
                         />
                     </Grid>
                     <Grid xs={1} xd={1} item>
-                        <Button fullWidth
-                                color="secondary"
+                        <Button color="secondary"
                                 variant="outlined"
-                                onClick={this.onButtonClick}>+
+                                onClick={this.onButtonClick}
+                                fullWidth>+
                         </Button>
                     </Grid>
                 </Grid>

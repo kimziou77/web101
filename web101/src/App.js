@@ -1,6 +1,5 @@
 import React from 'react'
 import Todo from './components/Todo'
-import {Switch} from "react-router";
 
 class App extends React.Component {
     constructor(props){

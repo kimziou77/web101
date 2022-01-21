@@ -1,4 +1,5 @@
 import React from 'react'
+import {Checkbox, ListItem} from "@material-ui/core";
 
 class Todo extends React.Component{
     constructor(props) {
@@ -7,12 +8,20 @@ class Todo extends React.Component{
     }
     render(){
         return (
-            <div className="Todo">
-                <input type="checkbox"
-                       id={this.state.id} name = {this.state.name} checked={this.state.done}/>
-
-                <label id={this.state.item.id}>{this.state.item.title}</label>
-            </div>
+            <ListItem>
+                <Checkbox checked={item.done}/>
+                <ListItemText>
+                    <InputBase
+                        inputProps={{"aria-label":"naked"}}
+                        type="text"
+                        id={item.id}
+                        name={item.id}
+                        value={item.title}
+                        multiline={true}
+                        fullwidth={true}
+                    />
+                </ListItemText>
+            </ListItem>
         )
     }
 

@@ -19,12 +19,19 @@ class App extends React.Component {
         thisItems.push(item)
         this.setState({items:thisItems})
     }
+    delete = (item)=>{
+        const thisItems = this.state.item
+        const newItems = thisItems.filter(e=> e.id !== item.id)
+        this.setState({item:newItems},()=>{
+            console.log("Update Items : ",this.state.item)
+        })
+    }
     render(){
         var todoItems = this.state.item.length > 0 && (
             <Paper style={{margin:16}}>
                 <List>
                     {this.state.item.map((item, idx)=>
-                        (<Todo item={item} key={item.id}/>)
+                        (<Todo item={item} key={item.id} delete={this.delete}/>)
                     )}
                 </List>
             </Paper>

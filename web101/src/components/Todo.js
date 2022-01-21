@@ -1,10 +1,15 @@
 import React from 'react'
-import {Checkbox, InputBase, ListItem, ListItemText} from "@material-ui/core";
+import {Checkbox, IconButton, InputBase, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {DeleteOutlined} from "@material-ui/icons";
 
 class Todo extends React.Component{
     constructor(props) {
         super(props);
         this.state = { item : props.item }
+        this.delete = props.delete
+    }
+    deleteEventHadler = ()=>{
+        this.delete(this.state.item)
     }
     render(){
         const item = this.state.item;
@@ -22,6 +27,13 @@ class Todo extends React.Component{
                         fullwidth={true}
                     />
                 </ListItemText>
+                <ListItemSecondaryAction>
+                    <IconButton
+                        aria-label="Delete Todo"
+                        onClick={this.deleteEventHadler}>
+                        <DeleteOutlined/>
+                    </IconButton>
+                </ListItemSecondaryAction>
             </ListItem>
         )
     }

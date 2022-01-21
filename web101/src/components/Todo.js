@@ -1,5 +1,5 @@
 import React from 'react'
-import {Checkbox, ListItem} from "@material-ui/core";
+import {Checkbox, InputBase, ListItem, ListItemText} from "@material-ui/core";
 
 class Todo extends React.Component{
     constructor(props) {
@@ -7,6 +7,7 @@ class Todo extends React.Component{
         this.state = { item : props.item }
     }
     render(){
+        const item = this.state.item;
         return (
             <ListItem>
                 <Checkbox checked={item.done}/>

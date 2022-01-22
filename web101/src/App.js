@@ -24,7 +24,6 @@ class App extends React.Component {
             this.setState({items:response.data})
         )
     }
-
     delete = (item)=>{
         call("/todo","DELETE",item).then((response)=>
             this.setState({items:response.data})
@@ -35,7 +34,6 @@ class App extends React.Component {
             this.setState({items:response.data})
         )
     }
-
     render(){
         var todoItems = this.state.items.length > 0 && (
             <Paper style={{margin:16}}>

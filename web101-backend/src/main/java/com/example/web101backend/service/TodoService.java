@@ -25,6 +25,7 @@ public class TodoService {
             throw new RuntimeException("Unknown User");
         }
     }
+
     public List<TodoEntity> create(final TodoEntity entity){
         validate(entity);
         repository.save(entity);
@@ -35,7 +36,6 @@ public class TodoService {
         log.info("Entity id : {} is retrieve. ",userId);
         return repository.findByUserId(userId);
     }
-
     public List<TodoEntity> update(final TodoEntity entity){
         validate(entity);
         final Optional<TodoEntity> original = repository.findById(entity.getId());

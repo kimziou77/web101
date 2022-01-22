@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class UserController {
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserService userService;
@@ -26,13 +25,15 @@ public class UserController {
     @Autowired
     private TokenProvider tokenProvider;
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
-        try{
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
+        try {
             UserEntity user = UserEntity.builder()
                     .email(userDTO.getEmail())
                     .username(userDTO.getUsername())
-                    .password(userDTO.getPassword())
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
                     .build();
             UserEntity registeredUser = userService.create(user);
             UserDTO responseUserDTO = UserDTO.builder()
@@ -40,8 +41,9 @@ public class UserController {
                     .id(registeredUser.getId())
                     .username(registeredUser.getUsername())
                     .build();
-            return ResponseEntity.ok().body(responseUserDTO);
-        }catch (Exception e){
+            System.out.println(ResponseEntity.ok(responseUserDTO));
+            return ResponseEntity.ok(responseUserDTO);
+        } catch (Exception e) {
             ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
             return ResponseEntity
                     .badRequest()
@@ -50,18 +52,23 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
+
         UserEntity user = userService.getByCredentials(
-                userDTO.getEmail(), userDTO.getPassword(), passwordEncoder);
-        if(user != null){
+                userDTO.getEmail(),
+                userDTO.getPassword(),
+                passwordEncoder);
+
+        if(user != null) {
             final String token = tokenProvider.create(user);
-            final UserDTO resposeUserDTO = UserDTO.builder()
+            final UserDTO responseUserDTO = UserDTO.builder()
                     .email(user.getUsername())
                     .id(user.getId())
                     .token(token)
                     .build();
-            return ResponseEntity.ok().body(resposeUserDTO);
-        }else{
+            System.out.println(ResponseEntity.ok(responseUserDTO));
+            return ResponseEntity.ok().body(responseUserDTO);
+        } else {
             ResponseDTO responseDTO = ResponseDTO.builder()
                     .error("Login failed.")
                     .build();
@@ -70,5 +77,4 @@ public class UserController {
                     .body(responseDTO);
         }
     }
-
 }

@@ -1,21 +1,23 @@
 import React from 'react'
 import Todo from './components/Todo'
-import {Container, List, Paper} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, List, Paper, Toolbar, Typography} from "@material-ui/core";
 import AddTodo from "./components/AddTodo";
-import {call} from "./service/ApiService";
+import {call, signout} from "./service/ApiService";
+import Loading from "./components/Loading";
 
 
 class App extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            items : []
+            items : [],
+            loading: true
         }
     }
 
     componentDidMount() {
         call("/todo", "GET", null).then((response) =>
-            this.setState({items: response.data})
+            this.setState({items: response.data, loading:false})
         )
     }
 
@@ -34,8 +36,10 @@ class App extends React.Component {
             this.setState({items:response.data})
         )
     }
+    
+
     render(){
-        var todoItems = this.state.items.length > 0 && (
+        let todoItems = this.state.items.length > 0 && (
             <Paper style={{margin:16}}>
                 <List>
                     {this.state.items.map((item, idx)=>
@@ -48,13 +52,38 @@ class App extends React.Component {
                 </List>
             </Paper>
         )
+        let navigationBar = (
+            <AppBar position="static">
+                <Toolbar>
+                    <Grid justifyContent="space-between" container>
+                        <Grid item>
+                            <Typography variant="h6">오늘의 할 일</Typography>
+                        </Grid>
+                        <Grid>
+                            <Button color="inherit" onClick={signout}>
+                                로그아웃
+                            </Button>
+                        </Grid>
+                    </Grid>
 
-        return (<div className="App">
-                    <Container maxWidth="md">
-                        <AddTodo add={this.add}/>
-                        <div className="TodoList">{todoItems}</div>
-                    </Container>
-                </div>);
+                </Toolbar>
+            </AppBar>
+        )
+        let todoListPage = (
+            <div className="App">
+                {navigationBar}
+                <Container maxWidth="md">
+                    <AddTodo add={this.add}/>
+                    <div className="TodoList">{todoItems}</div>
+                </Container>
+            </div>
+        )
+        let loadingPage = <Loading/>
+        let content = loadingPage;
+        if(!this.state.loading){
+            content = todoListPage
+        }
+        return <div className="App">{content}</div>;
     }
 }
 

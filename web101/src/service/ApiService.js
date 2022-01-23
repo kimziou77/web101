@@ -2,8 +2,6 @@ import {API_BASE_URL} from "../api-config"
 const ACCESS_TOKEN = "ACCESS_TOKEN"
 
 export function call(api, method, request) {
-
-
     let headers = new Headers({
         "Content-Type": "application/json",
     })
@@ -41,6 +39,10 @@ export function call(api, method, request) {
         });
 }
 
+export function signup(userDTO){
+    return call("/auth/signup","POST",userDTO)
+}
+
 export function signin(userDTO) {
     return call("/auth/signin", "POST", userDTO).then((response) => {
         if (response.token) {
@@ -49,3 +51,9 @@ export function signin(userDTO) {
         }
     });
 }
+
+export function signout(){
+    localStorage.setItem(ACCESS_TOKEN,null)
+    window.location.href = "/login"
+}
+

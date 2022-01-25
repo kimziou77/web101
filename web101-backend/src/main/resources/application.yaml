@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    activate:
+      on-profile: dev
+
+---
+
+spring:
+  profiles:
+    activate:
+      on-profile: prod

@@ -7,8 +7,7 @@ if (hostname === "localhost"){
     backendHost = "http://localhost:8080"
 }
 else{
-    backendHost = "https://api.kimyooo.com/"
+    backendHost = "https://api.kimyooo.com"
 }
-
 
 export const API_BASE_URL = `${backendHost}`;

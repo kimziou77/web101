@@ -1,10 +1,11 @@
-import {API_BASE_URL} from "../api-config"
+import {API_BASE_URL} from "../app-config"
 const ACCESS_TOKEN = "ACCESS_TOKEN"
 
 export function call(api, method, request) {
     let headers = new Headers({
         "Content-Type": "application/json",
     })
+
     const accessToken = localStorage.getItem("ACCESS_TOKEN")
     if(accessToken && accessToken!= null){
         headers.append("Authorization","Bearer "+ accessToken)
@@ -17,7 +18,6 @@ export function call(api, method, request) {
     if (request) {
         options.body = JSON.stringify(request);
     }
-
     return fetch(options.url, options)
         .then((response) =>{
             if (response.status === 403) {

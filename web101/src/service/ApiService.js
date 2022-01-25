@@ -18,7 +18,6 @@ export function call(api, method, request) {
     if (request) {
         options.body = JSON.stringify(request);
     }
-    alert(options.url)
     return fetch(options.url, options)
         .then((response) =>{
             if (response.status === 403) {

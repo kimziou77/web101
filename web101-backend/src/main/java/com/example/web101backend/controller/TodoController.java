@@ -4,6 +4,7 @@ import com.example.web101backend.controller.dto.ResponseDTO;
 import com.example.web101backend.controller.dto.TodoDTO;
 import com.example.web101backend.persistence.TodoEntity;
 import com.example.web101backend.service.TodoService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 //서버는 자기 주소를 제외한 {/리소스} 부분을 이해하고 어떤 요청이 어떤 http 메서드를 이용했는지 알아야 한다.
 @RestController
+@Slf4j
 @RequestMapping("todo")
 public class TodoController {
     @Autowired
@@ -42,6 +44,7 @@ public class TodoController {
     public ResponseEntity<?> retrieveTodoList(
             @AuthenticationPrincipal String userId){
         List<TodoEntity> entities = service.retrieve(userId);
+        log.info(userId," retrieve");
         List<TodoDTO> dtos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
         ResponseDTO<TodoDTO> response = ResponseDTO.<TodoDTO>builder().data(dtos).build();
         return ResponseEntity.ok().body(response);
@@ -72,7 +75,6 @@ public class TodoController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-
 
 }
 

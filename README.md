@@ -5,5 +5,5 @@
 <img src="https://user-images.githubusercontent.com/41179265/151498430-0a8d7535-6be5-4f8a-b71a-71fdfc5d1dc2.gif" width="50%" height="50%">
 
 ## 프로젝트 회고
-[프로젝트 회고](https://github.com/kimziou77/web101/wiki/Project-Description)  
+[프로젝트 회고](https://github.com/kimziou77/Reading-Books/tree/main/books/React.js-SpringBoot-AWS-Web101)  
 
